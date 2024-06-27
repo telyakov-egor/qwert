@@ -1,0 +1,51 @@
+name: CI for Flask App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Test with pytest
+      run: |
+        pip install pytest
+        pytest
+
+    - name: Deploy to Render
+      env:
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      run: |
+        curl -X POST \
+          -H 'Accept: application/json' \
+          -H 'Authorization: Bearer $RENDER_API_KEY' \
+          -H 'Content-Type: application/json' \
+          -d '{"serviceId": "cpuhu9aj1k6c738ab4n0/deploys/dep-cpuhu9aj1k6c738ab4qg"}' \
+          https://api.render.com/v1/services/cpuhu9aj1k6c738ab4n0/deploys/dep-cpuhu9aj1k6c738ab4qg/deploys
