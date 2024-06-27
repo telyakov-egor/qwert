@@ -1,5 +1,5 @@
 import pytest
-from app import app
+from ..app import app
 from urllib.parse import quote
 
 quoted_url = quote("https://example.com/?query=param with space")
