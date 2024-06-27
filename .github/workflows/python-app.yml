@@ -31,3 +31,14 @@ jobs:
     - name: Run tests
       run: |
         pytest
+    - name: Deploy to Render
+      env:
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      run: |
+        curl -X POST \
+          -H 'Accept: application/json' \
+          -H 'Authorization: Bearer $RENDER_API_KEY' \
+          -H 'Content-Type: application/json' \
+          -d '{"serviceId": "srv-cpuhu9aj1k6c738ab4n0"}' \
+          https://api.render.com/v1/services/cpuhu9aj1k6c738ab4n0/deploys/srv-cpuhu9aj1k6c738ab4n0/deploys
+
