@@ -47,5 +47,5 @@ jobs:
           -H 'Accept: application/json' \
           -H 'Authorization: Bearer $RENDER_API_KEY' \
           -H 'Content-Type: application/json' \
-          -d '{"serviceId": "YOUR_SERVICE_ID"}' \
-          https://api.render.com/v1/services/YOUR_SERVICE_ID/deploys
+          -d '{"serviceId": "cpuhu9aj1k6c738ab4n0/deploys/dep-cpuhu9aj1k6c738ab4qg"}' \
+          https://api.render.com/v1/services/cpuhu9aj1k6c738ab4n0/deploys/dep-cpuhu9aj1k6c738ab4qg/deploys
