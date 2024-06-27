@@ -1,5 +1,8 @@
 import pytest
-from main import app
+from ..main import app
+from urllib.parse import quote
+
+quoted_url = quote("https://example.com/?query=param with space")
 
 @pytest.fixture
 def client():
